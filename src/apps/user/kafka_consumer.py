@@ -27,25 +27,25 @@ def save_image_from_url_to_model(user, url) -> None:
 
     img_extension = url.split(".")[-1]
 
-    img_temp = NamedTemporaryFile(delete=True)
-    img_temp.write(urlopen(url).read())
-    img_temp.flush()
-    user.image.save(
-        f"{uuid.uuid4()}.{img_extension}",
-        content=File(img_temp),
-        save=True,
-    )
+    with NamedTemporaryFile(delete=True) as img_temp:
+        img_temp.write(urlopen(url).read())
+        img_temp.flush()
+        user.image.save(
+            f"{uuid.uuid4()}.{img_extension}",
+            content=File(img_temp),
+            save=True,
+        )
 
 
 def create_or_update_user(user_data: dict) -> None:
     from django.contrib.auth import get_user_model
 
-    User = get_user_model()
+    user_model = get_user_model()
 
-    if User.objects.filter(email=user_data["email"]).exists():
-        user = User.objects.get(email=user_data["email"])
+    if user_model.objects.filter(email=user_data["email"]).exists():
+        user = user_model.objects.get(email=user_data["email"])
     else:
-        user = User()
+        user = user_model()
 
     user.email = user_data["email"]
     user.name = user_data["name"]

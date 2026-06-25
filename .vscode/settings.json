@@ -2,7 +2,9 @@
   "[python]": {
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit"
-    }
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
   },
   "python.analysis.extraPaths": [
     "${workspaceFolder}/src"
@@ -17,10 +19,11 @@
   "python.analysis.completeFunctionParens": true,
   "python.analysis.useLibraryCodeForTypes": true,
   "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled": true,
-  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": false,
+  "python.linting.enabled": false,
+  "ruff.enable": true,
+  "ruff.formatOnSave": true,
   "files.autoSave": "onFocusChange",
-  "python.formatting.provider": "black",
   "editor.formatOnSave": true,
   "beautify.language": {
     "html": [

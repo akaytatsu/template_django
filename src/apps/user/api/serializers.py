@@ -18,7 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserViewSerializer(serializers.ModelSerializer):
-
     name_initials = serializers.SerializerMethodField()
 
     class Meta:

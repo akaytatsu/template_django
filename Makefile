@@ -47,19 +47,22 @@ up_normal: show_env
 	docker-compose ${DOCKER_COMPOSE_FILE} up -d --remove-orphans
 
 checkcode: show_env
-	echo "verify pep8 ..."
-	docker-compose ${DOCKER_COMPOSE_FILE} exec app flake8 .
-	docker-compose ${DOCKER_COMPOSE_FILE} exec app isort . --check-only
+	echo "Verificando código com Ruff..."
+	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff check .
 
-flake8: show_env
-	echo "verify pep8 ..."
-	docker-compose ${DOCKER_COMPOSE_FILE} exec app black .
-	docker-compose ${DOCKER_COMPOSE_FILE} exec app isort .
-	docker-compose ${DOCKER_COMPOSE_FILE} exec app flake8 .
+ruff: show_env
+	echo "Verificando e formatando código com Ruff..."
+	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff check --fix .
+	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff format .
 
-localflake8: show_env
-	echo "verify pep8 ..."
-	black . && isort . && flake8 .
+ruff-check: show_env
+	echo "Verificando código com Ruff (sem alterar)..."
+	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff check .
+	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff format --check .
+
+localruff: show_env
+	echo "Verificando e formatando código com Ruff..."
+	ruff check --fix . && ruff format .
 
 log: show_env
 	docker-compose ${DOCKER_COMPOSE_FILE} logs -f --tail 200 app
@@ -150,7 +153,7 @@ chown_project:
 generate_factories_bot: show_env
 	docker-compose ${DOCKER_COMPOSE_FILE} exec app ${PYTHON_EXEC} manage.py generate_factories
 
-generate_factories: show_env generate_factories_bot chown_project flake8
+generate_factories: show_env generate_factories_bot chown_project ruff
 
 create_venv: show_env
 	python3 -m venv ${VENV_PATH}

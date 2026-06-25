@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -28,9 +27,7 @@ class Migration(migrations.Migration):
                 ("password", models.CharField(max_length=128, verbose_name="password")),
                 (
                     "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
+                    models.DateTimeField(blank=True, null=True, verbose_name="last login"),
                 ),
                 (
                     "is_superuser",
@@ -43,9 +40,7 @@ class Migration(migrations.Migration):
                 (
                     "email",
                     models.EmailField(
-                        error_messages={
-                            "unique": "Já existe um usuario cadastrado com este email."
-                        },
+                        error_messages={"unique": "Já existe um usuario cadastrado com este email."},
                         help_text="Obrigatório. 150 caracteres ou menos. São permitidos números, letras e @ /. / + / - / _ .",
                         max_length=150,
                         unique=True,
@@ -55,9 +50,7 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=150, verbose_name="Nome")),
                 (
                     "date_joined",
-                    models.DateTimeField(
-                        auto_now_add=True, verbose_name="data de cadastro"
-                    ),
+                    models.DateTimeField(auto_now_add=True, verbose_name="data de cadastro"),
                 ),
                 (
                     "image",
