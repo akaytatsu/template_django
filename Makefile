@@ -60,6 +60,9 @@ ruff-check: show_env
 	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff check .
 	docker-compose ${DOCKER_COMPOSE_FILE} exec app ruff format --check .
 
+# Aliases
+lint: ruff
+
 localruff: show_env
 	echo "Verificando e formatando código com Ruff..."
 	ruff check --fix . && ruff format .
