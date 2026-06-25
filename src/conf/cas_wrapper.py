@@ -31,8 +31,6 @@ class APILoginView(cas_views.LoginView):
         bracket = "" if settings.FRONTEND_AUTH_REDIRECT[-1] == "/" else "/"
 
         new_next_page = next_page
-        new_next_page = (
-            f"{settings.FRONTEND_AUTH_REDIRECT}{bracket}{jwt_token}/{refresh_token}/"
-        )
+        new_next_page = f"{settings.FRONTEND_AUTH_REDIRECT}{bracket}{jwt_token}/{refresh_token}/"
 
         return HttpResponseRedirect(new_next_page)

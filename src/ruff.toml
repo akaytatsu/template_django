@@ -1,0 +1,15 @@
+line-length = 120
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]
+ignore = ["E402", "E722", "E203"]
+
+[lint.per-file-ignores]
+"*/migrations/*.py" = ["ALL"]
+"**/settings*.py" = ["ALL"]
+"**/apps.py" = ["ALL"]
+"**/update_groups.py" = ["ALL"]
+
+[format]
+quote-style = "double"

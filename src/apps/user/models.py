@@ -61,9 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         _("email"),
         max_length=150,
         unique=True,
-        help_text=_(
-            "Obrigatório. 150 caracteres ou menos. São permitidos números, letras e @ /. / + / - / _ ."
-        ),
+        help_text=_("Obrigatório. 150 caracteres ou menos. São permitidos números, letras e @ /. / + / - / _ ."),
         error_messages={
             "unique": _("Já existe um usuario cadastrado com este email."),
         },
@@ -89,8 +87,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         _("Ativo"),
         default=True,
         help_text=_(
-            "Define se o usuário está ativo ou não. "
-            "Desmarque este campo ao invés de deletar a conta do usuário."
+            "Define se o usuário está ativo ou não. Desmarque este campo ao invés de deletar a conta do usuário."
         ),
     )
 

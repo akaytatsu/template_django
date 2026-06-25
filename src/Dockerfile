@@ -1,8 +1,9 @@
 FROM python:3.12-bullseye
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
 
-# Instalar dependências e librdkafka com WORKDIR e --no-install-recommends
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# System dependencies
 WORKDIR /tmp
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
@@ -14,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsasl2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Build librdkafka em WORKDIR separado
+# Build librdkafka
 WORKDIR /usr/src/librdkafka
 RUN git clone https://github.com/edenhill/librdkafka.git . \
     && git checkout v1.9.2 \
@@ -24,19 +25,21 @@ RUN git clone https://github.com/edenhill/librdkafka.git . \
     && ldconfig \
     && rm -rf /usr/src/librdkafka
 
-# Criar usuário não-root
+# Create non-root user
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
 WORKDIR /app
-RUN chown -R appuser:appgroup /app
 
-RUN pip install --upgrade pip
+# Install Python dependencies
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
+# Copy application code
 COPY ./ ./
 
-# Usar usuário não-root
+RUN chown -R appuser:appgroup /app
+
 USER appuser
 
 ENTRYPOINT ["sh", "./docker_assets/entrypoint.sh"]

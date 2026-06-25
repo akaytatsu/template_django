@@ -165,7 +165,6 @@ MEDIA_URL = "/media/"
 
 
 if not LOCAL_ENV:
-
     AWS_QUERYSTRING_AUTH = False
 
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", None)
@@ -299,9 +298,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = False
 
 # KAFKA
-KAFKA_BOOTSTRAP_SERVER: str = config(
-    "KAFKA_BOOTSTRAP_SERVER", cast=str, default="kafka:9092"
-)
+KAFKA_BOOTSTRAP_SERVER: str = config("KAFKA_BOOTSTRAP_SERVER", cast=str, default="kafka:9092")
 KAFKA_CLIENT_ID: str = config("KAFKA_CLIENT_ID", cast=str, default="kafka-python")
 KAFKA_GROUP_ID: str = config("KAFKA_GROUP_ID", cast=str, default="kafka-python")
 KAFKA_TOPICS = {
@@ -318,14 +315,10 @@ AUTHENTICATION_BACKENDS = (
     "django_cas_ng.backends.CASBackend",
 )
 
-CAS_SERVER_URL = config(
-    "CAS_SERVER_URL", default="https://id-vertc-stg.ageriservicos.com.br/cas/"
-)
+CAS_SERVER_URL = config("CAS_SERVER_URL", default="https://id-vertc-stg.ageriservicos.com.br/cas/")
 
 CAS_CHECK_NEXT = False
 
 URL_CAS_SERVER_URL = CAS_SERVER_URL.replace("/cas/", "/")
 
-FRONTEND_AUTH_REDIRECT = config(
-    "FRONTEND_AUTH_REDIRECT", default="http://localhost:8000/auth"
-)
+FRONTEND_AUTH_REDIRECT = config("FRONTEND_AUTH_REDIRECT", default="http://localhost:8000/auth")

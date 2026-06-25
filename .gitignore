@@ -279,4 +279,11 @@ dist
 npm-debug.log
 yarn-error.log
 
+# Trivy
+trivy-report.json
+trivy-*.json
+
+# Docker
+.docker/
+
 # End of https://www.toptal.com/developers/gitignore/api/django,vuejs,node

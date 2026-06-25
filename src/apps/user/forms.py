@@ -7,9 +7,7 @@ from .models import User
 
 class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label=_("Senha"), widget=forms.PasswordInput)
-    password2 = forms.CharField(
-        label=_("Confirmação de senha"), widget=forms.PasswordInput
-    )
+    password2 = forms.CharField(label=_("Confirmação de senha"), widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -27,7 +25,7 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super(UserCreationForm, self).save(commit=False)
+        user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
@@ -44,7 +42,7 @@ class UserChangeForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(UserChangeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.fields["groups"].required = False
 
