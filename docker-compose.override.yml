@@ -20,11 +20,21 @@ services:
     volumes:
       - ./src:/app
     depends_on:
-      - db
+      db:
+        condition: service_started
+      mail:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
   mail:
     image: mailhog/mailhog:v1.0.1
     ports:
       - 8025:8025
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8025/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   djangoq:
     build:
       context: ./src
@@ -50,6 +60,17 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "bash",
+          "-c",
+          "kafka-broker-api-versions --bootstrap-server localhost:9092",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   webkafka:
     image: provectuslabs/kafka-ui:latest
     ports:
